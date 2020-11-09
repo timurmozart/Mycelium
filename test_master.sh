@@ -1,7 +1,4 @@
-# Mycelium
-Destributed system
- 
-
+#!/bin/bash
 docker build \
     --rm \
     --tag=mycelium-master:latest \
