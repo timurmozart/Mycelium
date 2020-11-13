@@ -7,6 +7,6 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-EXPOSE 5000
+EXPOSE 65432
 
-CMD [ "python", "master.py" ]
+CMD [ "python", "app.py" ]
