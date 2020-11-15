@@ -3,7 +3,7 @@
 # Press ⌃R to execute it or replace it with your code.
 # Press Double ⇧ to search everywhere for classes, files, tool windows, actions, and settings.
 import socket
-
+import time
 
 def print_hi(name):
     # Use a breakpoint in the code line below to debug your script.
@@ -13,23 +13,31 @@ def client_udp():
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     sock.sendto(b'ebaaaaa', ('127.0.0.1', 8888))
 
-def client_tcp():
+def client_tcp(msg):
     for i in range(11):
 
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         sock.connect(('127.0.0.1', 8000))
-        msg = 'msg #'+str(i+1)
         print(msg)
         sndmsg = str.encode(msg)
         sock.send(sndmsg)
         sock.close()
 
+from flask import Flask, request #import main Flask class and request object
+app = Flask(__name__) #create the Flask app
+@app.route('/post-example', methods=['POST']) #GET requests will be blocked
+def json_example():
+    print('**************** start **********************')
+    data = request.get_json()['data']
+    print(data)
+    client_tcp(data)
+
+    print('***************** end **********************')
+    return "got it"
 
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    # print_hi('PyCharm')
-    # client_udp()
-    client_tcp()
+    app.run(host='0.0.0.0', port=5000, debug=True) #run app in debug mode on port 5000
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+

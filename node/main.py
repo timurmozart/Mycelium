@@ -35,9 +35,6 @@ def server_tcp():
             break
         else:
             result = client.recv(1024)
-            for i in range(5):
-                time.sleep(1)
-                print('sleep...')
             client.close()
             print('msg: ', result.decode('utf-8'))
             msgs.append(result.decode('utf-8'))
