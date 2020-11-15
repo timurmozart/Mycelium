@@ -14,14 +14,12 @@ def client_udp():
     sock.sendto(b'ebaaaaa', ('127.0.0.1', 8888))
 
 def client_tcp(msg):
-    for i in range(11):
-
-        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        sock.connect(('127.0.0.1', 8000))
-        print(msg)
-        sndmsg = str.encode(msg)
-        sock.send(sndmsg)
-        sock.close()
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    sock.connect(('127.0.0.1', 8000))
+    # print(msg)
+    sndmsg = str.encode(msg)
+    sock.send(sndmsg)
+    sock.close()
 
 from flask import Flask, request #import main Flask class and request object
 app = Flask(__name__) #create the Flask app
