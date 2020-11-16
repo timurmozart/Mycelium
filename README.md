@@ -12,6 +12,8 @@ docker run \
     --rm \
     -p 5000:5000 \
     --name myc-m \
+    --hostname=myc-m \
+    --network=myc \
     mycelium-master:latest
 
 # NODE
@@ -23,6 +25,8 @@ docker build \
 docker run \
     -it \
     --rm \
-    -p 5001:5000 \
+    --hostname=myc-n \
+    -p 8000/tcp \
     --name myc-n \
+    --network=myc \
     mycelium-node:latest

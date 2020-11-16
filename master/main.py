@@ -15,8 +15,9 @@ def client_udp():
 
 def client_tcp(msg):
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    sock.connect(('127.0.0.1', 8000))
+    sock.connect(('myc-n', 8000))
     # print(msg)
+    print(type(msg))
     sndmsg = str.encode(msg)
     sock.send(sndmsg)
     sock.close()
@@ -26,10 +27,11 @@ app = Flask(__name__) #create the Flask app
 @app.route('/post-example', methods=['POST']) #GET requests will be blocked
 def json_example():
     print('**************** start **********************')
-    data = request.get_json()['data']
+    # data = request.get_json()['data']
+    data = request.get_data().decode("utf-8")
+    # print(data)
     print(data)
     client_tcp(data)
-
     print('***************** end **********************')
     return "got it"
 
