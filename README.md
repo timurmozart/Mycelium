@@ -30,3 +30,7 @@ docker run \
     --name myc-n \
     --network=myc \
     mycelium-node:latest
+
+# sender раз в две секунды отправить тестовые данныет
+    cd sender
+    watch 'python3.9 main.py'
