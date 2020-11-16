@@ -1,6 +1,9 @@
 # Mycelium
 Destributed system
  
+# Network create
+docker network create myc
+
 # MASTER
 
 docker build \
