@@ -9,7 +9,7 @@ properties([
 
 timestamps{
     node{
-        git_pull(mycelium_git)
+        git_pull(repo, branch)
         docker_build()
         docker_run()
     }
