@@ -85,6 +85,7 @@ def docker_kill(){
     }
 }
 
+
 def docker_test(){
     stage("test"){
         // sh "ls -la /usr/bin/"
