@@ -12,7 +12,7 @@ timestamps{
         git_pull(repo, branch)
         docker_build()
         docker_run()
-        docker_stop()
+        docker_kill()
     }
 }
 
@@ -73,11 +73,11 @@ def docker_run(){
     }
 }
 
-def docker_stop(){
-    stage("stop containers")
+def docker_kill(){
+    stage("kill containers")
     {
         sh '''
-            docker stop myc-n myc-m
+            docker kill myc-n myc-m
         '''
     }
 }
