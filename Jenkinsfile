@@ -80,7 +80,7 @@ def docker_kill(){
     {
         sh '''
             docker kill myc-n myc-m 2> /dev/null;
-            sleep 0
+            sleep 1
         '''
     }
 }
