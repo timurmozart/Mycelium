@@ -89,6 +89,7 @@ def docker_test(){
     stage("test"){
         sh '''
             hostname
+            ls -lh /usr/bin/ | grep pyth
         '''
         // sh '''
         //     /usr/bin/python3 ./sender/main.py
