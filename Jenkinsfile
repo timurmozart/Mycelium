@@ -1,4 +1,5 @@
-mycelium_git="https://github.com/timurmozart/Mycelium"
+repo="https://github.com/timurmozart/Mycelium"
+branch="*/Tymur"
 
 properties([
     pipelineTriggers([
@@ -14,13 +15,12 @@ timestamps{
     }
 }
 
-def git_pull(address)
-{
+def git_pull(repo, branch){
     stage("git pull")
     {
         checkout([
             $class: 'GitSCM', 
-            branches: [[name: '*/Tymur']], 
+            branches: [[name: branch]], 
             doGenerateSubmoduleConfigurations: false, 
             extensions: [], 
             submoduleCfg: [], 
@@ -32,8 +32,7 @@ def git_pull(address)
     }
 }
 
-def docker_build()
-{
+def docker_build(){
     stage("Docker build")
     {
         sh '''
@@ -49,9 +48,7 @@ def docker_build()
     }
 }
 
-
-def docker_run()
-{
+def docker_run(){
     stage("Docker run")
     {
         sh '''
@@ -75,8 +72,7 @@ def docker_run()
     }
 }
 
-def docker_stop()
-{
+def docker_stop(){
     stage("stop containers")
     {
         sh '''
@@ -84,3 +80,4 @@ def docker_stop()
         '''
     }
 }
+
