@@ -37,3 +37,5 @@ docker run \
 # sender раз в две секунды отправить тестовые данныет
     cd sender
     watch 'python3.9 main.py'
+
+    
