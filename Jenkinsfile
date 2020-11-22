@@ -88,8 +88,7 @@ def docker_kill(){
 def docker_test(){
     stage("test"){
         sh '''
-            hostname
-            ls -lh /usr/bin/ | grep pyth
+            python3.6 --version
         '''
         // sh '''
         //     /usr/bin/python3 ./sender/main.py
