@@ -80,16 +80,14 @@ def docker_kill(){
     {
         sh '''
             docker kill myc-n myc-m;
-            sleep 1
+            sleep 0
         '''
     }
 }
 
 def docker_test(){
     stage("test"){
-        sh '''
-            /usr/bin/python3 ./sender/main.py
-        '''
+        sh "ls -la /usr/bin/python3"
     }
 }
 
