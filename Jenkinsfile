@@ -9,6 +9,7 @@ properties([
 
 timestamps{
     node{
+        docker_kill()
         git_pull(repo, branch)
         docker_build()
         docker_run()
