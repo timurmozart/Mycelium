@@ -10,6 +10,7 @@ timestamps{
     node{
         git_pull(mycelium_git)
         docker_build()
+        docker_run()
     }
 }
 
