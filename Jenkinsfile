@@ -49,6 +49,7 @@ def docker_build()
     }
 }
 
+
 def docker_run()
 {
     stage("Docker run")
