@@ -87,6 +87,7 @@ def docker_kill(){
 def docker_test(){
     stage("test"){
         sh '''
+            whoami
             python36 ./sender/main.py
         '''
     }
