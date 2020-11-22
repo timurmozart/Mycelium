@@ -35,7 +35,10 @@ def docker_build()
 {
     stage("Docker build")
     {
-        sh "pwd"
-        sh "ls -la"
+        sh 
+        """
+            pwd
+            ls -la
+        """
     }
 }
