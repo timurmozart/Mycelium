@@ -11,7 +11,7 @@ docker build \
     --tag=mycelium-master:latest \
     ./master/ ;\
 docker run \
-    -it \
+    -itd \
     --rm \
     -p 5000:5000 \
     --name myc-m \
@@ -21,12 +21,13 @@ docker run \
 
 # NODE
 
+
 docker build \
     --rm \
     --tag=mycelium-node:latest \
     ./node/ ;\
 docker run \
-    -it \
+    -itd \
     --rm \
     --hostname=myc-n \
     -p 8000/tcp \
@@ -38,4 +39,3 @@ docker run \
     cd sender
     watch 'python3.9 main.py'
 
-    
