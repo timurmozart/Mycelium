@@ -12,6 +12,7 @@ timestamps{
         git_pull(repo, branch)
         docker_build()
         docker_run()
+        some_tests()
         docker_kill()
     }
 }
@@ -82,4 +83,8 @@ def docker_kill(){
     }
 }
 
-
+def docker_test(){
+    stage("test"){
+        echo "some tests"
+    }
+}
