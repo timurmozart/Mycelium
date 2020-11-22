@@ -55,7 +55,7 @@ def docker_run()
     {
         sh '''
             docker run \
-                --itd \
+                -itd \
                 --rm \
                 --hostname=myc-n \
                 -p 8000/tcp \
