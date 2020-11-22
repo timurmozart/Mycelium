@@ -87,5 +87,8 @@ def docker_kill(){
 def docker_test(){
     stage("test"){
         echo "some tests"
+        sh '''
+            cat sender/main.py
+        '''
     }
 }
