@@ -1,4 +1,11 @@
 mycelium_git="https://github.com/timurmozart/Mycelium"
+
+properties([
+    pipelineTriggers([
+        githubPush()
+    ])
+])
+
 timestamps{
     node{
         git_pull(mycelium_git)
