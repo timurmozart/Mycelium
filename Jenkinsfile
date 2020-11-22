@@ -36,8 +36,10 @@ def docker_build()
     stage("Docker build")
     {
         sh '''
-            pwd
-            ls -la
+            docker build \
+                --rm \
+                --tag=mycelium-master:latest \
+                ./master/
         '''
     }
 }
