@@ -79,8 +79,7 @@ def docker_kill(){
     stage("kill containers")
     {
         sh '''
-            docker kill myc-n myc-m;
-            sleep 1
+            docker kill myc-n myc-m || echo "nothing to stop"
         '''
     }
 }
