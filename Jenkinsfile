@@ -55,7 +55,6 @@ def docker_run()
     {
         sh '''
             docker run \
-                -t \
                 --rm \
                 --hostname=myc-n \
                 -p 8000/tcp \
@@ -63,7 +62,6 @@ def docker_run()
                 --network=myc \
                 mycelium-node:latest
             docker run \
-                -t \
                 --rm \
                 -p 5000:5000 \
                 --name myc-m \
