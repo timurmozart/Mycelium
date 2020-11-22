@@ -39,7 +39,7 @@ def docker_build()
             `docker build \
                 --rm \
                 --tag=mycelium-master:latest \
-                ./master/
+                ./master/;\
 
             docker build \
                 --rm \
