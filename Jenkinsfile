@@ -76,7 +76,7 @@ def docker_stop(){
     stage("stop containers")
     {
         sh '''
-            docker kill myc-n myc-m
+            docker stop myc-n myc-m
         '''
     }
 }
