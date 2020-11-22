@@ -35,9 +35,9 @@ def docker_build()
 {
     stage("Docker build")
     {
-        sh """
+        sh '''
             pwd
             ls -la
-        """
+        '''
     }
 }
