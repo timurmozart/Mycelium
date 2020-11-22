@@ -88,7 +88,7 @@ def docker_kill(){
 def docker_test(){
     stage("test"){
         sh '''
-            python3 ./sender/main.py
+            /usr/bin/python3 ./sender/main.py
         '''
     }
 }
