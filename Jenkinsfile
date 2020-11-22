@@ -9,12 +9,12 @@ properties([
 
 timestamps{
     node{
-        docker_kill()
-        git_pull(repo, branch)
-        docker_build()
-        docker_run()
+        // docker_kill()
+        // git_pull(repo, branch)
+        // docker_build()
+        // docker_run()
         docker_test()
-        docker_kill()
+        // docker_kill()
     }
 }
 
@@ -79,7 +79,7 @@ def docker_kill(){
     stage("kill containers")
     {
         sh '''
-            docker kill myc-n myc-m;
+            docker kill myc-n myc-m 2> /dev/null;
             sleep 0
         '''
     }
