@@ -39,11 +39,36 @@ def docker_build()
             docker build \
                 --rm \
                 --tag=mycelium-master:latest \
-                ./master/;\
+                ./master/
             docker build \
                 --rm \
                 --tag=mycelium-node:latest \
                 ./node/ 
+        '''
+    }
+}
+
+def docker_run()
+{
+    stage("Docker run")
+    {
+        sh '''
+            docker run \
+                -it \
+                --rm \
+                --hostname=myc-n \
+                -p 8000/tcp \
+                --name myc-n \
+                --network=myc \
+                mycelium-node:latest
+            docker run \
+                -it \
+                --rm \
+                -p 5000:5000 \
+                --name myc-m \
+                --hostname=myc-m \
+                --network=myc \
+                mycelium-master:latest
         '''
     }
 }
