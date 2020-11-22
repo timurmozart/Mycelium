@@ -12,7 +12,7 @@ timestamps{
         git_pull(repo, branch)
         docker_build()
         docker_run()
-        some_tests()
+        docker_test()
         docker_kill()
     }
 }
