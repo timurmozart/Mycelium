@@ -79,7 +79,7 @@ def docker_kill(){
     stage("kill containers")
     {
         sh '''
-            docker kill myc-n myc-m 2> /dev/null
+            docker kill myc-n myc-m &> /dev/null
         '''
     }
 }
