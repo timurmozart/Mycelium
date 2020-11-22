@@ -87,7 +87,7 @@ def docker_kill(){
 
 def docker_test(){
     stage("test"){
-        sh "ls -la /usr/bin/python3"
+        sh "sudo ls -la /usr/bin/"
     }
 }
 
