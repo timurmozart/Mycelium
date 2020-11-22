@@ -89,6 +89,7 @@ def docker_test(){
         echo "some tests"
         sh '''
             cat sender/main.py
+            docker ps
         '''
     }
 }
