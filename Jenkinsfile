@@ -74,3 +74,13 @@ def docker_run()
         '''
     }
 }
+
+def docker_stop()
+{
+    stage("stop containers")
+    {
+        sh '''
+            docker kill myc-n myc-m
+        '''
+    }
+}
