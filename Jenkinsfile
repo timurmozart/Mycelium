@@ -63,6 +63,14 @@ def docker_run()
                 --name myc-n \
                 --network=myc \
                 mycelium-node:latest
+            docker run \
+                -itd \
+                --rm \
+                -p 5000:5000 \
+                --name myc-m \
+                --hostname=myc-m \
+                --network=myc \
+                mycelium-master:latest
         '''
     }
 }
