@@ -77,7 +77,7 @@ def docker_run(){
 
 def docker_kill(){
     stage("kill containers")
-    {
+    catchError{
         sh '''
             docker kill myc-n myc-m
         '''
