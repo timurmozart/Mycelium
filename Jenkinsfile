@@ -36,10 +36,15 @@ def docker_build()
     stage("Docker build")
     {
         sh '''
-            docker build \
+            `docker build \
                 --rm \
                 --tag=mycelium-master:latest \
                 ./master/
+
+            docker build \
+                --rm \
+                --tag=mycelium-node:latest \
+                ./node/ 
         '''
     }
 }
