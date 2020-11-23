@@ -91,7 +91,7 @@ def docker_test(){
         
         // sh 'cat ./sender/main.py'
         // sh 'python -m pip install requests'
-        sh 'ping muc-m'
+        sh 'ping myc-m'
         // sh '/usr/bin/python ./sender/main.py'
         
     }
