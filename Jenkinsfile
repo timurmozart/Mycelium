@@ -13,6 +13,7 @@ timestamps{
         docker_compose_rm()
         docker_compose_build_up()
         get_logs("myc-s")
+        docker_compose_rm()
     }
 }
 
