@@ -12,7 +12,8 @@ timestamps{
         docker_kill()
         git_pull(repo, branch)
         docker_compose_build()
-        docker_run()
+        docker_compose_up()
+        docker_compose_rm()
         docker_test()
         docker_kill()
     }
@@ -125,5 +126,17 @@ def docker_compose_build(){
     stage('docker-compose build') {
         sh "ls -la"
         sh "docker-compose build"
+    }
+}
+
+def docker_compose_up(){
+    stage("run"){
+        sh "docker-compose up"
+    }
+}
+
+def docker_compose_rm(){
+    stage("clear"){
+        sh "docker-compose rm -f"
     }
 }
