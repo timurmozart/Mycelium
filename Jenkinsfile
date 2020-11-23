@@ -90,8 +90,7 @@ def docker_test(){
         // sh 'ls -lh /usr/bin/'
         
         // sh 'cat ./sender/main.py'
-        sh 'curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py'
-        sh 'python get-pip.py'
+        sh 'python -m pip install requests'
         sh '/usr/bin/python ./sender/main.py'
         
     }
