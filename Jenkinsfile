@@ -91,6 +91,8 @@ def docker_test(){
                 --rm \
                 --tag=mycelium-sender:latest \
                 ./sender/
+        '''
+        sh '''
             docker run \
                 -t \
                 --rm \
