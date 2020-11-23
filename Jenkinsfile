@@ -87,10 +87,11 @@ def docker_kill(){
 def docker_test(){
     stage("test"){
         
-        sh 'ls -lh /usr/bin/'
+        // sh 'ls -lh /usr/bin/'
         
         // sh 'cat ./sender/main.py'
-        sh 'python -m pip install requests'
+        sh 'curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py'
+        sh 'python get-pip.py'
         sh '/usr/bin/python ./sender/main.py'
         
     }
