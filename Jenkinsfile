@@ -12,6 +12,7 @@ timestamps{
         git_pull(repo, branch)
         docker_compose_rm()
         docker_compose_build_up()
+        get_logs("myc-s")
     }
 }
 
