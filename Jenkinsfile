@@ -79,19 +79,31 @@ def docker_kill(){
     stage("kill containers")
     {
         sh '''
-            docker kill myc-n myc-m || echo "nothing to stop"
+            docker kill myc-n myc-m myc-s || echo "nothing to stop"
         '''
     }
 }
 
 def docker_test(){
     stage("test"){
-        
+        sh '''
+            docker build \
+                --rm \
+                --tag=mycelium-sender:latest \
+                ./sender/
+            docker run \
+                -itd \
+                --rm \
+                --hostname=myc-s \
+                --name myc-s \
+                --network=myc \
+                mycelium-sender:latest
+        '''
+
         // sh 'ls -lh /usr/bin/'
         
         // sh 'cat ./sender/main.py'
         // sh 'python -m pip install requests'
-        sh 'ping myc-m'
         // sh '/usr/bin/python ./sender/main.py'
         
     }

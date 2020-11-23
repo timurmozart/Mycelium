@@ -2,7 +2,7 @@ import time
 
 def send_post(file):
     import requests
-    url = 'http://0.0.0.0:5000/post-example'
+    url = 'http://myc-m:5000/post-example'
     data_json = open(file, "r").read()
     # data_json = {'data': data_text}
     x = requests.post(url, json=data_json)
@@ -10,9 +10,9 @@ def send_post(file):
     print(x.text)
 
 list = [
-    "sender/1.json",
-    "sender/2.json",
-    "sender/3.json"
+    "./1.json",
+    "./2.json",
+    "./3.json"
 ]
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
