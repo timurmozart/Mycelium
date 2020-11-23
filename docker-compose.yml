@@ -1,0 +1,39 @@
+version: '3.2'
+
+services:
+
+  myc-m:
+    hostname: myc-m
+    build: master/
+    ports:
+      - 5000
+    networks:
+      - mycelium
+
+  myc-n1:
+    build: node/
+    hostname: myc-n1
+    ports:
+      - 8000
+    networks:
+      - mycelium
+
+  myc-n2:
+    build: node/
+    hostname: myc-n2
+    ports:
+      - 8000
+    networks:
+      - mycelium
+
+  sender:
+    build: sender/
+    networks:
+      - mycelium
+    depends_on: 
+      - myc-m
+      - myc-n1
+      - myc-n2
+      
+networks:
+  mycelium:

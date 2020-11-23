@@ -11,7 +11,7 @@ timestamps{
     node{
         docker_kill()
         git_pull(repo, branch)
-        docker_build()
+        docker-compose_build()
         docker_run()
         docker_test()
         docker_kill()
@@ -60,7 +60,15 @@ def docker_run(){
                 --rm \
                 --hostname=myc-n \
                 -p 8000/tcp \
-                --name myc-n \
+                --name myc-n1 \
+                --network=myc \
+                mycelium-node:latest
+            docker run \
+                -itd \
+                --rm \
+                --hostname=myc-n \
+                -p 8000/tcp \
+                --name myc-n2 \
                 --network=myc \
                 mycelium-node:latest
             docker run \
@@ -111,3 +119,8 @@ def docker_test(){
     }
 }
 
+def docker-compose_build(){
+    stage('docker-compose build') {
+        sh "docker-compose build"
+    }
+}

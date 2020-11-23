@@ -15,7 +15,7 @@ def client_udp():
 
 def client_tcp(msg):
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    sock.connect(('myc-n', 8000))
+    sock.connect(('myc-n1', 8000))
     # print(msg)
     print(type(msg))
     sndmsg = str.encode(msg)

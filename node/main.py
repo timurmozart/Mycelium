@@ -24,7 +24,7 @@ def server_udp():
 
 def server_tcp():
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    sock.bind(('myc-n', 8000))
+    sock.bind((socket.gethostname(), 8000))
     sock.listen(10)
     msgs = []
     while True:
