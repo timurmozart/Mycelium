@@ -10,10 +10,10 @@ properties([
 timestamps{
     node{
         git_pull(repo, branch)
-        docker_compose_rm()
+        docker_compose_kill_rm()
         docker_compose_build_up()
         get_logs("myc-s")
-        docker_compose_rm()
+        docker_compose_kill_rm()
     }
 }
 
@@ -24,8 +24,9 @@ def docker_compose_build_up(){
     }
 }
 
-def docker_compose_rm(){
+def docker_compose_kill_rm(){
     stage("clear"){
+        sh "docker-compose kill"
         sh "docker-compose rm -f"
     }
 }
