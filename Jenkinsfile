@@ -92,7 +92,7 @@ def docker_test(){
                 --tag=mycelium-sender:latest \
                 ./sender/
             docker run \
-                -itd \
+                -it \
                 --rm \
                 --hostname=myc-s \
                 --name myc-s \
