@@ -10,9 +10,9 @@ def send_post(file):
     print(x.text)
 
 list = [
-    "./1.json",
-    "./2.json",
-    "./3.json"
+    "sender/1.json",
+    "sender/2.json",
+    "sender/3.json"
 ]
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
