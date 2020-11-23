@@ -18,7 +18,7 @@ timestamps{
 
 def docker_compose_build_up(){
     stage('docker-compose build and up -d') {
-        sh "docker-compose build"
+        sh "docker-compose build -q"
         sh "docker-compose up -d"
     }
 }
@@ -34,8 +34,6 @@ def get_logs(target){
         sh "docker-compose logs "
     }
 }
-
-
 
 
 
