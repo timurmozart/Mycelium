@@ -86,9 +86,9 @@ def docker_kill(){
 
 def docker_test(){
     stage("test"){
-        // sh '''
-        //     ls -lh /usr/bin/
-        // '''
+        
+        sh 'ls -lh /usr/bin/'
+        
         // sh 'cat ./sender/main.py'
         sh 'pip install requests'
         sh '/usr/bin/python ./sender/main.py'
