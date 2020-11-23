@@ -31,7 +31,7 @@ def docker_compose_rm(){
 
 def get_logs(target){
     stage("logs from ${target}"){
-        sh ""
+        sh "docker-compose logs ${target}"
     }
 }
 
