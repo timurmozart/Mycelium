@@ -11,7 +11,7 @@ timestamps{
     node{
         docker_kill()
         git_pull(repo, branch)
-        docker-compose_build()
+        docker_compose_build()
         docker_run()
         docker_test()
         docker_kill()
@@ -119,7 +119,7 @@ def docker_test(){
     }
 }
 
-def docker-compose_build(){
+def docker_compose_build(){
     stage('docker-compose build') {
         sh "docker-compose build"
     }
