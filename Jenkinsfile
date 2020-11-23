@@ -9,13 +9,22 @@ properties([
 
 timestamps{
     node{
-        // docker_kill()
         git_pull(repo, branch)
         docker_compose_rm()
-        docker_compose_build()
-        docker_compose_up()
-        docker_test()
-        // docker_kill()
+        docker_compose_build_up()
+    }
+}
+
+def docker_compose_build_up(){
+    stage('docker-compose build') {
+        sh "docker-compose build"
+        sh "docker-compose up -d"
+    }
+}
+
+def docker_compose_rm(){
+    stage("clear"){
+        sh "docker-compose rm -f"
     }
 }
 
@@ -117,26 +126,5 @@ def docker_test(){
         // sh 'python -m pip install requests'
         // sh '/usr/bin/python ./sender/main.py'
         
-    }
-}
-
-
-
-def docker_compose_build(){
-    stage('docker-compose build') {
-        sh "ls -la"
-        sh "docker-compose build"
-    }
-}
-
-def docker_compose_up(){
-    stage("run"){
-        sh "docker-compose up -d"
-    }
-}
-
-def docker_compose_rm(){
-    stage("clear"){
-        sh "docker-compose rm -f"
     }
 }
