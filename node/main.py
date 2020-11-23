@@ -45,6 +45,8 @@ def server_tcp():
 if __name__ == '__main__':
     print_hi('PyCharm')
     # server_udp()
-    server_tcp()
+    # server_tcp()
+    print(socket.gethostname())
+
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
