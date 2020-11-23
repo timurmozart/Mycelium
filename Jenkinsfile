@@ -119,6 +119,8 @@ def docker_test(){
     }
 }
 
+
+
 def docker_compose_build(){
     stage('docker-compose build') {
         sh "ls -la"
