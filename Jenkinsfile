@@ -9,12 +9,12 @@ properties([
 
 timestamps{
     node{
-        // docker_kill()
+        docker_kill()
         git_pull(repo, branch)
-        // docker_build()
-        // docker_run()
+        docker_build()
+        docker_run()
         docker_test()
-        // docker_kill()
+        docker_kill()
     }
 }
 
