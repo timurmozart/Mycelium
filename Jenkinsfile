@@ -9,13 +9,13 @@ properties([
 
 timestamps{
     node{
-        docker_kill()
+        // docker_kill()
         git_pull(repo, branch)
+        docker_compose_rm()
         docker_compose_build()
         docker_compose_up()
-        docker_compose_rm()
         docker_test()
-        docker_kill()
+        // docker_kill()
     }
 }
 
@@ -131,7 +131,7 @@ def docker_compose_build(){
 
 def docker_compose_up(){
     stage("run"){
-        sh "docker-compose up"
+        sh "docker-compose up -d"
     }
 }
 
