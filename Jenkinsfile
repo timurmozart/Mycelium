@@ -90,6 +90,7 @@ def docker_test(){
         //     ls -lh /usr/bin/
         // '''
         // sh 'cat ./sender/main.py'
+        sh 'pip install requests'
         sh '/usr/bin/python ./sender/main.py'
         
     }
