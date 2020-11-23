@@ -19,3 +19,4 @@ if __name__ == '__main__':
     for i in list:
         print(i)
         send_post(i)
+        time.sleep(5)
