@@ -89,9 +89,9 @@ def docker_test(){
         // sh '''
         //     ls -lh /usr/bin/
         // '''
-        sh '''
-            /usr/bin/python ./sender/main.py
-        '''
+        sh 'cat ./sender/main.py'
+        // sh '/usr/bin/python ./sender/main.py'
+        
     }
 }
 
