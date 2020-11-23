@@ -86,11 +86,11 @@ def docker_kill(){
 
 def docker_test(){
     stage("test"){
+        // sh '''
+        //     ls -lh /usr/bin/
+        // '''
         sh '''
-            ls -lh /usr/bin/
-        '''
-        sh '''
-            /usr/bin/python3.6 ./sender/main.py
+            /usr/bin/python ./sender/main.py
         '''
     }
 }
