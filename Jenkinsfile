@@ -16,7 +16,7 @@ timestamps{
 }
 
 def docker_compose_build_up(){
-    stage('docker-compose build') {
+    stage('docker-compose build and up -d') {
         sh "docker-compose build"
         sh "docker-compose up -d"
     }
@@ -27,6 +27,31 @@ def docker_compose_rm(){
         sh "docker-compose rm -f"
     }
 }
+
+def get_logs(target){
+    stage("logs from ${target}"){
+        sh ""
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 def git_pull(repo, branch){
     stage("git pull")
