@@ -32,13 +32,13 @@ app = Flask(__name__) #create the Flask app
 @app.route('/post-example', methods=['POST']) #GET requests will be blocked
 def json_example():
     print('**************** start **********************')
-    # data = request.get_json()['data']
-    data = request.get_data().decode("utf-8")
+    data = request.get_json()['data']
+    # data = request.get_data().decode("utf-8")
+    print(type(data))
     # print(data)
-    print(data)
     
-    client_tcp1(data)
-    client_tcp2(data)
+    # client_tcp1(data)
+    # client_tcp2(data)
     print('***************** end **********************')
     return "got it"
 
