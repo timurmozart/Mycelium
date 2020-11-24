@@ -13,9 +13,9 @@ def client_udp():
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     sock.sendto(b'ebaaaaa', ('127.0.0.1', 8888))
 
-def client_tcp(msg):
+def client_tcp(target, msg):
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    sock.connect(('myc-n1', 8000))
+    sock.connect((target, 8000))
     # print(msg)
     print(type(msg))
     sndmsg = str.encode(msg)
@@ -31,7 +31,8 @@ def json_example():
     data = request.get_data().decode("utf-8")
     # print(data)
     print(data)
-    client_tcp(data)
+    client_tcp('myc-n1', data)
+    client_tcp('myc-n2', data)
     print('***************** end **********************')
     return "got it"
 

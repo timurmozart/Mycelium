@@ -21,6 +21,8 @@ services:
   myc-n2:
     build: node/
     hostname: myc-n2
+    deploy:
+      replicas: 2
     ports:
       - 8000
     networks:
