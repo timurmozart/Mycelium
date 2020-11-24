@@ -6,7 +6,7 @@ services:
     hostname: myc-m
     build: master/
     ports:
-      - 5000
+      - 5000:5000
     networks:
       - mycelium
 
@@ -21,21 +21,19 @@ services:
   myc-n2:
     build: node/
     hostname: myc-n2
-    deploy:
-      replicas: 2
     ports:
       - 8000
     networks:
       - mycelium
 
-  sender:
-    build: sender/
-    networks:
-      - mycelium
-    depends_on: 
-      - myc-m
-      - myc-n1
-      - myc-n2
+  # sender:
+  #   build: sender/
+  #   networks:
+  #     - mycelium
+  #   depends_on: 
+  #     - myc-m
+  #     - myc-n1
+  #     - myc-n2
       
 networks:
   mycelium:

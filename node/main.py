@@ -9,19 +9,6 @@ def print_hi(name):
     # Use a breakpoint in the code line below to debug your script.
     print(f'Hi, {name}')  # Press ⌘F8 to toggle the breakpoint.
 
-
-def server_udp():
-    sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    sock.bind(('127.0.0.1', 8888))
-    while True:
-        try:
-            result = sock.recv(1024)
-        except KeyboardInterrupt:
-            sock.close()
-            break
-        else:
-            print('msg: ', result.decode('utf-8'))
-
 def server_tcp():
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     sock.bind((socket.gethostname(), 8000))
@@ -45,7 +32,7 @@ def server_tcp():
 if __name__ == '__main__':
     print_hi('PyCharm')
     # server_udp()
-    # server_tcp()
+    server_tcp()
     print(socket.gethostname())
 
 
