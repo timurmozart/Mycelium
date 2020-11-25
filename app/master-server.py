@@ -11,18 +11,21 @@ import config
 class CustomHandler(server.SimpleHTTPRequestHandler):
 
     def client_tcp(self, msg, host, port):
+        print('Sending...')
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         sock.connect((host, port))
-        body = '{"msg":' + '"' + msg + '"' + '}'
-        length = len(body)
-        serverHost = str(host) + ":" + str(port)
-        request = "POST /append HTTP/1.1\r\nHost:{0}\r\nUser-Agent: Master-node\r\nContent-Type: application/json\r\nContent-Length: {1}\r\n\r\n{2}\r\n".format(
-            serverHost, length, body)
-        payload = request.encode()
-        sock.sendall(payload)
+        #body = '{"msg":' + '"' + msg + '"' + '}'
+        #length = len(body)
+        #serverHost = str(host) + ":" + str(port)
+        # request = "POST /append HTTP/1.1\r\nHost:{0}\r\nUser-Agent: Master-node\r\nContent-Type: application/json\r\nContent-Length: {1}\r\n\r\n{2}\r\n".format(
+        #     serverHost, length, body)
+        #payload = request.encode()
+        sock.sendall(msg.encode())
         response = sock.recv(1024)
-        acknowledgement = response.decode('utf-8').split('\r\n')[0].split('ACK:')[-1]
+        acknowledgement = response.decode('utf-8')  #.split('\r\n')[0].split('ACK:')[-1]
+        print('ACK:', acknowledgement)
         sock.close()
+        #acknowledgement = 'OK'
         return acknowledgement
 
     def do_GET(self):
@@ -41,7 +44,7 @@ class CustomHandler(server.SimpleHTTPRequestHandler):
     def do_POST(self):
         global server_data
         global HOST_secondaty_1, HOST_secondaty_2
-        global PORT_secondaty_1, PORT_secondaty_2
+        global PORT_secondaty_12, PORT_secondaty_22
         if self.path == '/append':
             self.data_string = self.rfile.read(int(self.headers['Content-Length']))
             data = json.loads(self.data_string)
@@ -51,11 +54,12 @@ class CustomHandler(server.SimpleHTTPRequestHandler):
             server_data.append(new_message)
             print('Appended new message', new_message)
             ack_list = []
-            tasks = [lambda: self.client_tcp(new_message, HOST_secondaty_1, PORT_secondaty_1),
-                     lambda: self.client_tcp(new_message, HOST_secondaty_2, PORT_secondaty_2)]
+            tasks = [lambda: self.client_tcp(new_message, HOST_secondaty_1, PORT_secondaty_12),
+                     lambda: self.client_tcp(new_message, HOST_secondaty_2, PORT_secondaty_22)]
             with ThreadPoolExecutor() as executor:
                 running_tasks = [executor.submit(task) for task in tasks]
                 for running_task in running_tasks:
+                    print('In thread loop')
                     node_ack = running_task.result()
                     ack_list.append(node_ack)
             #print(set(ack_list))
@@ -72,9 +76,11 @@ if __name__ == '__main__':
     HOST_master = config.Master[0]
     PORT_master = config.Master[1]
     HOST_secondaty_1 = config.Secondary_1[0]
-    PORT_secondaty_1 = config.Secondary_1[1]
+    PORT_secondaty_11 = config.Secondary_1[1]
+    PORT_secondaty_12 = config.Secondary_1[2]
     HOST_secondaty_2 = config.Secondary_2[0]
-    PORT_secondaty_2 = config.Secondary_2[1]
+    PORT_secondaty_21 = config.Secondary_2[1]
+    PORT_secondaty_22 = config.Secondary_2[2]
     Handler = CustomHandler
     with SocketServer.TCPServer((HOST_master, PORT_master), Handler) as httpd:
         print('Master: {}:{}'.format(HOST_master, PORT_master))
