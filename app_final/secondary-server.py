@@ -24,7 +24,7 @@ class CustomHandler(BaseHTTPRequestHandler):
             print('Saved data on the server: ', server_data)
 
 
-def run_server_tcp(host, port):
+def run_server_tcp(host, port, delay_ack_time):
     global server_data
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     sock.bind((host, port))
@@ -38,7 +38,8 @@ def run_server_tcp(host, port):
             break
         else:
             result = client.recv(1024)
-            #time.sleep(10)
+            if delay_ack_time > 0:
+                time.sleep(delay_ack_time)
             client.send(b'OK')
             client.close()
             server_data.append(result.decode('utf-8'))
@@ -63,8 +64,9 @@ if __name__ == '__main__':
         PORT_secondary_2 = config.Secondary_2[2]
     else:
         print('No secondary node with index {}'.format(argv[1]))
+    delay_responce_time = int(argv[2])
 
-    tasks = [lambda: run_server_tcp(HOST_secondary, PORT_secondary_2),
+    tasks = [lambda: run_server_tcp(HOST_secondary, PORT_secondary_2, delay_responce_time),
              lambda: run_http_server(HOST_secondary, PORT_secondary_1)]
     with ThreadPoolExecutor() as executor:
         running_tasks = [executor.submit(task) for task in tasks]
