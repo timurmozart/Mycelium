@@ -1,25 +1,61 @@
 #!/usr/bin/env python3
 from http.server import BaseHTTPRequestHandler
 import socketserver as SocketServer
-from concurrent.futures import ThreadPoolExecutor
+#from concurrent.futures import ThreadPoolExecutor
 import socket
+import threading
 import json
 import sys
 import config
 
 
-class CustomHandler(BaseHTTPRequestHandler):
+class CountDownLatch:
+    def __init__(self, count=1):
+        self.count = count
+        self.lock = threading.Condition()
 
-    def send_to_secondary(self, msg, host, port, node_index):
-        print('Sending to a secondary node {} ...'.format(node_index))
-        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        sock.connect((host, port))
-        sock.sendall(msg.encode())
-        response = sock.recv(1024)
-        acknowledgement = response.decode('utf-8')
-        print('ACK from the secondary node {}:'.format(node_index), acknowledgement)
-        sock.close()
-        return acknowledgement
+    def count_down(self):
+        try:
+            self.lock.acquire()
+            self.count -= 1
+            if self.count <= 0:
+                self.lock.notifyAll()
+        finally:
+            self.lock.release()
+
+    def wait(self):
+        try:
+            self.lock.acquire()
+            while self.count > 0:
+                self.lock.wait()
+        finally:
+            self.lock.release()
+
+
+def send_to_secondary(msg, node_details, ack_dict):
+
+    host = node_details[0]
+    port = node_details[1]
+    node_index = node_details[2]
+    print('Sending to a secondary node {} ...'.format(node_index))
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    sock.connect((host, port))
+    sock.sendall(msg.encode())
+    response = sock.recv(1024)
+    acknowledgement = response.decode('utf-8')
+    print('ACK from the secondary node {}:'.format(node_index), acknowledgement)
+    ack_dict[node_index] = acknowledgement
+    sock.close()
+
+
+def run_thread_with_count(params):
+    print('Thread: ' + str(params[1]) + ':' + str(params[2]) + " is running")
+    send_to_secondary(params[0], params[1:4], params[4])
+    print('Thread: ' + str(params[1]) + ':' + str(params[2]) + " is finished")
+    params[5].count_down()
+
+
+class CustomHandler(BaseHTTPRequestHandler):
 
     def do_GET(self):
         global server_data
@@ -42,22 +78,34 @@ class CustomHandler(BaseHTTPRequestHandler):
             self.data_string = self.rfile.read(int(self.headers['Content-Length']))
             data = json.loads(self.data_string)
             new_message = data['msg']
+            write_concern = data['write_concern']
             server_data.append(new_message)
             print('Appended new message:', new_message)
-            ack_list = []
-            tasks = [lambda: self.send_to_secondary(new_message, HOST_secondaty_1, PORT_secondaty_12, 1),
-                     lambda: self.send_to_secondary(new_message, HOST_secondaty_2, PORT_secondaty_22, 2)]
-            with ThreadPoolExecutor() as executor:
-                running_tasks = [executor.submit(task) for task in tasks]
-                for running_task in running_tasks:
-                    node_ack = running_task.result()
-                    ack_list.append(node_ack)
-            if len(ack_list) == 2 and set(ack_list) == {'OK'}:
+            print('Write concern', write_concern)
+            replies_from_nodes = write_concern - 1
+            acknolegment = {}
+            countDownLatch = CountDownLatch(replies_from_nodes)
+            if write_concern == 1:
                 self.send_response(200)
                 self.end_headers()
                 self.wfile.write(bytes('Appended new message:' + str(new_message), encoding='utf-8'))
+                for tuple_params in [
+                    (new_message, HOST_secondaty_1, PORT_secondaty_12, 1, acknolegment, countDownLatch),
+                    (new_message, HOST_secondaty_2, PORT_secondaty_22, 2, acknolegment, countDownLatch)]:
+                    threading.Thread(target=run_thread_with_count, args=(tuple_params,)).start()
             else:
-                self.send_response(500)
+                for tuple_params in [
+                    (new_message, HOST_secondaty_1, PORT_secondaty_12, 1, acknolegment, countDownLatch),
+                    (new_message, HOST_secondaty_2, PORT_secondaty_22, 2, acknolegment, countDownLatch)]:
+                    threading.Thread(target=run_thread_with_count, args=(tuple_params,)).start()
+                countDownLatch.wait()
+                if len(acknolegment) == replies_from_nodes:
+                    self.send_response(200)
+                    self.end_headers()
+                    self.wfile.write(bytes('Appended new message:' + str(new_message), encoding='utf-8'))
+                else:
+                    print('Error')
+                    self.send_response(500)
 
 
 if __name__ == '__main__':

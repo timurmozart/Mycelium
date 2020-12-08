@@ -26,6 +26,7 @@ class CustomHandler(BaseHTTPRequestHandler):
 
 def run_server_tcp(host, port):
     global server_data
+    global HOST_secondary
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     sock.bind((host, port))
     print('TCP server is up: {}:{}'.format(host, port))
@@ -38,7 +39,8 @@ def run_server_tcp(host, port):
             break
         else:
             result = client.recv(1024)
-            #time.sleep(10)
+            if (config.sleep_time_secondary_2 != 0) and (HOST_secondary == 'myc-n2'):
+                time.sleep(config.sleep_time_secondary_2)
             client.send(b'OK')
             client.close()
             server_data.append(result.decode('utf-8'))

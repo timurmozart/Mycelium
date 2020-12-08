@@ -2,38 +2,42 @@
 Destributed system UCU 
 
 -------------------------------------------------------------------------
-POST request looks like:
-POST    localhost:8080/append
+### HTTP requests examples
+**POST**  
+`POST    localhost:8080/append`
 
 body (JSON): 
-{
-    "msg": "msg0"
-}
+`{
+    "msg": "msg0",
+    "write_concern": 1
+}`  
 
-GET request looks like:
-GET     localhost:8080/list
+**GET**  
+`GET     localhost:8080/list`
 
 -------------------------------------------------------------------------
-tasks for run:
+### How to execute
 
-docker network create myc-network
+`docker network create myc-network`
 
-cd app_final/dockerfiles/master
-docker build --rm --tag mycelium-master:krystina .
-cd ../../..
-docker  run \
+**Masret-node**  
+* `cd app_final/dockerfiles/master`
+* `docker build --rm --tag mycelium-master:krystina .`
+* `cd ../../..`
+* `docker  run \
         -it \
         --rm \
         -p 8080:8080 \
         --name myc-m \
         --hostname myc-m \
         --network myc-network \
-        mycelium-master:krystina
+        mycelium-master:krystina`  
 
-cd app_final/dockerfiles/secondary
-docker build --rm --tag mycelium-secondary:krystina .
-cd ../../..
-docker  run \
+**Secondary node 1**  
+* `cd app_final/dockerfiles/secondary`
+* `docker build --rm --tag mycelium-secondary:krystina .`
+* `cd ../../..`
+* `docker  run \
         -it \
         --rm \
         -p 8003:8003 \
@@ -41,12 +45,13 @@ docker  run \
         --name myc-n1 \
         --hostname myc-n1 \
         --network myc-network \
-        mycelium-secondary:krystina
+        mycelium-secondary:krystina`  
 
-cd app_final/dockerfiles/secondary
-docker build --rm --tag mycelium-secondary:krystina .
-cd ../../..
-docker  run \
+**Secondary node 2**  
+* `cd app_final/dockerfiles/secondary`
+* `docker build --rm --tag mycelium-secondary:krystina .`
+* `cd ../../..`
+* `docker  run \
         -it \
         --rm \
         -p 8001:8001 \
@@ -54,4 +59,4 @@ docker  run \
         --name myc-n2 \
         --hostname myc-n2 \
         --network myc-network \
-        mycelium-secondary:krystina
+        mycelium-secondary:krystina`  
