@@ -101,7 +101,7 @@ class CustomHandler(BaseHTTPRequestHandler):
                 self.wfile.write(bytes('Appended new message:' + str(new_message), encoding='utf-8'))
                 for tuple_params in [(new_message, HOST_secondaty_1, PORT_secondaty_12, 1, acknolegment, countDownLatch),
                          (new_message, HOST_secondaty_2, PORT_secondaty_22, 2, acknolegment, countDownLatch)]:
-                    threading.Thread(target=run_count, args=(tuple_params,)).start()
+                    threading.Thread(target=run_thread_with_count, args=(tuple_params,)).start()
             else:
                 for tuple_params in [(new_message, HOST_secondaty_1, PORT_secondaty_12, 1, acknolegment, countDownLatch),
                          (new_message, HOST_secondaty_2, PORT_secondaty_22, 2, acknolegment, countDownLatch)]:
